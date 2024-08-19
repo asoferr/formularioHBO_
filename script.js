@@ -1,38 +1,36 @@
-document.addEventListener('DOMContentLoaded', function() {
-   
-    function handleFormSubmit(event) {
-        event.preventDefault();
+//executa a função fornecida quando o documento for completamente carregado
+document.addEventListener('DOMContentLoaded', () => {
 
-        
-        var form = event.target;
-
-        // Cria uma string para armazenar os dados
-        var formData = '';
-
-        
-        for (var i = 0; i < form.elements.length; i++) {
-            var element = form.elements[i];
-            if (element.name && element.value) {
-                formData += element.name + ': ' + element.value + '\n';
-            }
-        }
-
-        // Exibe os dados no console
-        console.log('Dados do formulário:\n' + formData);
-
-        // Limpa os campos do formulário
-        form.reset();
-    }
-
-   
-    var signupForm = document.getElementById('signup-form');
-    if (signupForm) {
-        signupForm.addEventListener('submit', handleFormSubmit);
-    }
-
+    //id armazena dados
+    const form = document.getElementById('signup-form');
     
-    var loginForm = document.getElementById('login-form');
-    if (loginForm) {
-        loginForm.addEventListener('submit', handleFormSubmit);
-    }
+    
+    //submit funciona quando o formulário é enviado 
+    form.addEventListener('submit', (event) => {
+        event.preventDefault(); // Previne o envio padrão do formulário,ou seja,não vai enviar igual uum formulário padrão
+
+        // Cria um objeto interface
+        const formData = new FormData(form);
+
+        //Objeto vazio onde os dados são armazenados 
+        const formObject = {};
+        
+        //Pares-chaves, para cada par adicionar uma nova propiedade ao formObject
+        formData.forEach((value, key) => {
+            formObject[key] = value;
+        });
+
+        // Converte o objeto JavaScript para uma string JSON,o null e o 2 vai ser utilizado para a saída do Json
+        const jsonString = JSON.stringify(formObject, null, 2);
+
+        
+        console.log(jsonString); //Exibir console
+
+        
+         // Limpa os campos do formulário
+         form.reset();
+        
+
+    });
+    
 });
